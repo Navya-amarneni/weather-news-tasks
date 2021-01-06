@@ -32,23 +32,26 @@ class PredictSentiment(Resource):
         place=args.place
         date_time=args.date_time
         place=' '+place
-        
-        with open('Japan_cities_rainfall.csv') as infile:
+        prediction='jj'
+        output = {'place': place , 'date_time':date_time ,'rainfall': prediction }
+        with open('rainfall_to_predict.csv') as infile:
             read = csv.reader(infile)
             for row in read :
                 if row[1]==place and row[0]==date_time:
                     ro=row
                     print(ro)
+                    global predict
                     ro.remove(ro[0])
                     ro.remove(ro[0])
-                    ro.remove(ro[2])
                     ro=np.array(ro,dtype='float64')
                     roy=ro.reshape(1,-1)
                     predict=np.array2string(model.predict(roy))
-                    print(predict)
-     
+        # use parser and find the user's query
+        # vectorize the user's query and make a prediction
+        #prediction = np.array2string(model.predict(data))
         # create JSON object
-        output = {'place': place , 'date_time':date_time ,'rainfall': predict }
+        output['rainfall']=predict
+
         return output
 # Setup the Api resource routing here
 # Route the URL to the resource
