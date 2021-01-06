@@ -51,7 +51,6 @@ class PredictSentiment(Resource):
         #prediction = np.array2string(model.predict(data))
         # create JSON object
         output['rainfall']=predict
-
         return output
 # Setup the Api resource routing here
 # Route the URL to the resource
